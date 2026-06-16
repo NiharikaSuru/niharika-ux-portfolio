@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>F2MX — Niharika Suru</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FFFFFF;
+    --cloud:#F6F7F9;
+    --cloud-2:#F0F2F4;
+    --ink:#12151C;
+    --slate:#5C6470;
+    --mist:#97A1AC;
+    --line:#E7E9EC;
+    --accent:#1B6E62;
+    --accent-2:#4FA98E;
+    --accent-soft:#EAF4F1;
+    --radius-lg:22px;
+    --radius-md:16px;
+    --radius-sm:10px;
+    --maxw:1180px;
+    --ease:cubic-bezier(.22,.61,.36,1);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Manrope',sans-serif;
+    margin:0;
+    letter-spacing:-0.02em;
+    color:var(--ink);
+  }
+  p{margin:0;}
+  a{color:inherit;text-decoration:none;}
+  img,svg{display:block;max-width:100%;}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    font-weight:500;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--accent);
+  }
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px;}
+  section{position:relative;}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px;}
+
+  .nav{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    background:rgba(255,255,255,0.7);
+    backdrop-filter:blur(14px) saturate(140%);
+    -webkit-backdrop-filter:blur(14px) saturate(140%);
+    border-bottom:1px solid transparent;
+    transition:border-color .3s var(--ease), background .3s var(--ease);
+  }
+  .nav.scrolled{border-bottom-color:var(--line);}
+  .nav-inner{
+    max-width:var(--maxw);margin:0 auto;padding:18px 32px;
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .nav-logo{font-family:'Manrope',sans-serif;font-weight:700;font-size:17px;letter-spacing:-0.01em;}
+  .nav-logo span{color:var(--accent);}
+  .nav-links{display:flex;align-items:center;gap:36px;list-style:none;margin:0;padding:0;}
+  .nav-links a{font-size:14.5px;font-weight:500;color:var(--slate);transition:color .2s var(--ease);}
+  .nav-links a:hover{color:var(--ink);}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:'Inter',sans-serif;font-weight:600;font-size:14.5px;
+    padding:11px 22px;border-radius:999px;
+    cursor:pointer;border:1px solid transparent;
+    transition:transform .25s var(--ease), box-shadow .25s var(--ease), background .25s var(--ease), border-color .25s var(--ease);
+    white-space:nowrap;
+  }
+  .btn.primary{
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));
+    color:#fff;
+    box-shadow:0 1px 2px rgba(18,21,28,0.06), 0 8px 20px -10px rgba(27,110,98,0.55);
+  }
+  .btn.primary:hover{transform:translateY(-2px);box-shadow:0 4px 8px rgba(18,21,28,0.06), 0 14px 28px -10px rgba(27,110,98,0.6);}
+  .btn.ghost{background:transparent;border-color:var(--line);color:var(--ink);}
+  .btn.ghost:hover{border-color:var(--accent);background:var(--accent-soft);transform:translateY(-2px);}
+  .btn.small{padding:9px 16px;font-size:13.5px;}
+  .nav-cta{display:flex;align-items:center;gap:14px;}
+
+  .project-hero{padding:140px 0 80px;background:var(--cloud);border-bottom:1px solid var(--line);}
+  .project-hero-inner{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;}
+  .project-hero-text .eyebrow{margin-bottom:16px;display:block;}
+  .project-hero-text h1{font-size:clamp(36px,4.5vw,52px);font-weight:700;line-height:1.1;margin-bottom:20px;}
+  .project-hero-text .role-tag{display:inline-block;background:var(--accent-soft);color:var(--accent);padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;margin-bottom:16px;}
+  .project-hero-text p{font-size:18px;color:var(--slate);line-height:1.7;}
+  .project-hero-image{background:var(--cloud-2);border:1px solid var(--line);border-radius:var(--radius-lg);aspect-ratio:16/10;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+  .project-hero-image img{width:100%;height:100%;object-fit:cover;}
+  .project-hero-image .placeholder{color:var(--mist);font-size:14px;text-align:center;padding:20px;}
+
+  .project-content{padding:80px 0;}
+  .cs-section{margin-bottom:64px;}
+  .cs-section-title{font-size:24px;font-weight:700;margin-bottom:20px;display:flex;align-items:center;gap:12px;}
+  .cs-section-title::before{content:"";width:4px;height:24px;background:var(--accent);border-radius:2px;}
+  .cs-section p{font-size:16px;color:var(--slate);line-height:1.7;max-width:800px;}
+  .cs-section p + p{margin-top:14px;}
+
+  .cs-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:24px;}
+  .cs-grid.triple{grid-template-columns:repeat(3,1fr);}
+  .cs-grid.quad{grid-template-columns:repeat(4,1fr);}
+  .cs-card{background:var(--cloud);border:1px solid var(--line);border-radius:var(--radius-md);padding:24px;transition:border-color .25s var(--ease), transform .25s var(--ease);}
+  .cs-card:hover{border-color:var(--accent);transform:translateY(-2px);}
+  .cs-card h4{font-family:'Manrope',sans-serif;font-size:16px;font-weight:700;margin-bottom:10px;color:var(--ink);}
+  .cs-card p{font-size:14px;color:var(--slate);line-height:1.55;}
+  .cs-card .icon{width:40px;height:40px;background:var(--accent-soft);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;}
+  .cs-card .icon svg{width:20px;height:20px;stroke:var(--accent);}
+
+  .cs-list{list-style:none;padding:0;margin:20px 0 0;display:grid;gap:12px;}
+  .cs-list li{display:flex;align-items:flex-start;gap:12px;font-size:15px;color:var(--slate);line-height:1.6;}
+  .cs-list li::before{content:"";width:6px;height:6px;background:var(--accent);border-radius:50%;margin-top:8px;flex-shrink:0;}
+
+  .cs-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:28px;}
+  .cs-metric{background:linear-gradient(135deg,var(--accent-soft) 0%,#fff 100%);border:1px solid var(--line);border-radius:var(--radius-md);padding:28px 24px;text-align:center;transition:transform .25s var(--ease);}
+  .cs-metric:hover{transform:translateY(-3px);}
+  .cs-metric .value{font-family:'Manrope',sans-serif;font-size:36px;font-weight:800;color:var(--accent);line-height:1;}
+  .cs-metric .label{font-size:13px;color:var(--slate);margin-top:8px;font-weight:500;}
+
+  .cs-image-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:28px;}
+  .cs-image-grid.triple{grid-template-columns:repeat(3,1fr);}
+  .cs-image-box{background:var(--cloud-2);border:1px solid var(--line);border-radius:var(--radius-md);aspect-ratio:16/10;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;}
+  .cs-image-box.tall{aspect-ratio:9/16;}
+  .cs-image-box.square{aspect-ratio:1/1;}
+  .cs-image-box img{width:100%;height:100%;object-fit:cover;}
+  .cs-image-box .placeholder{color:var(--mist);font-size:13px;text-align:center;padding:16px;}
+
+  .cs-learnings{background:var(--accent-soft);border:1px solid rgba(27,110,98,0.2);border-radius:var(--radius-lg);padding:36px;margin-top:28px;}
+  .cs-learnings h4{font-family:'Manrope',sans-serif;font-size:18px;font-weight:700;margin-bottom:16px;color:var(--accent);}
+  .cs-learnings ul{list-style:none;padding:0;margin:0;display:grid;gap:14px;}
+  .cs-learnings li{position:relative;padding-left:28px;font-size:15px;color:var(--ink);line-height:1.6;}
+  .cs-learnings li::before{content:"✓";color:var(--accent);font-weight:700;position:absolute;left:0;top:0;}
+
+  .project-nav{display:flex;justify-content:space-between;align-items:center;padding:48px 0;border-top:1px solid var(--line);margin-top:48px;}
+  .project-nav-item{display:flex;flex-direction:column;gap:4px;}
+  .project-nav-item.next{align-items:flex-end;text-align:right;}
+  .project-nav-item .label{font-size:12px;color:var(--mist);text-transform:uppercase;letter-spacing:0.05em;}
+  .project-nav-item .title{font-family:'Manrope',sans-serif;font-size:18px;font-weight:700;color:var(--ink);transition:color .2s var(--ease);}
+  .project-nav-item:hover .title{color:var(--accent);}
+
+  footer{padding:32px 0;border-top:1px solid var(--line);background:var(--cloud);}
+  .footer-inner{display:flex;justify-content:space-between;align-items:center;font-size:13.5px;color:var(--mist);}
+
+  [data-reveal]{opacity:0;transform:translateY(18px);transition:opacity .7s var(--ease), transform .7s var(--ease);}
+  [data-reveal].is-visible{opacity:1;transform:translateY(0);}
+
+  @media (max-width:980px){
+    .project-hero-inner{grid-template-columns:1fr;}
+    .project-hero-image{order:-1;}
+    .cs-grid,.cs-grid.triple,.cs-grid.quad{grid-template-columns:1fr;}
+    .cs-metrics{grid-template-columns:repeat(2,1fr);}
+    .cs-image-grid,.cs-image-grid.triple{grid-template-columns:1fr;}
+  }
+  @media (max-width:680px){
+    .wrap{padding:0 22px;}
+    .nav-links{display:none;}
+    .project-hero{padding:120px 0 60px;}
+    .cs-metrics{grid-template-columns:1fr;}
+    .project-nav{flex-direction:column;gap:24px;}
+    .project-nav-item,.project-nav-item.next{align-items:center;text-align:center;}
+    .footer-inner{flex-direction:column;gap:8px;text-align:center;}
+  }
+</style>
+</head>
+<body>
+
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="niharika-portfolio.html" class="nav-logo">Niharika <span>Suru</span></a>
+      <ul class="nav-links">
+        <li><a href="niharika-portfolio.html#work">Work</a></li>
+        <li><a href="niharika-portfolio.html#about">About</a></li>
+        <li><a href="niharika-portfolio.html#process">Process</a></li>
+        <li><a href="niharika-portfolio.html#contact">Contact</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a class="btn ghost small" href="niharika-portfolio.html#work">← All Projects</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="project-hero">
+    <div class="wrap project-hero-inner">
+      <div class="project-hero-text" data-reveal>
+        <span class="eyebrow">Mobile Product · Fantasy Sports</span>
+        <span class="role-tag">Mobile Product Designer</span>
+        <h1>F2MX</h1>
+        <p>A fan-to-market experience app for NFL fantasy sports where users buy and sell players like stocks, compete in leagues, earn achievements, and manage virtual wallets — achieving 20% reduction in onboarding friction and 15% increase in user engagement.</p>
+      </div>
+      <div class="project-hero-image" data-reveal>
+       <img src="https://images.unsplash.com/photo-1566577739112-5180d4bf9390?w=400&h=600&fit=crop" alt="NFL Football game">
+      </div>
+    </div>
+  </header>
+
+  <main class="project-content">
+    <div class="wrap">
+
+      <div class="cs-section" data-reveal>
+        <h2 class="cs-section-title">Overview</h2>
+        <p>F2MX is a fan-to-market experience app built around NFL seasons and games. Users can buy and sell players like stocks, join or create leagues, earn trading achievements (Bargain Bin, Flip Master, League Winner), and manage their virtual wallet economy — all with a sleek dark-themed mobile interface.</p>
+        <p>This project documents the mobile product design focused on creating intuitive player trading flows, league management, wallet transactions, and gamification features that drive engagement throughout the NFL season.</p>
+      </div>
+
+      <div class="cs-section" data-reveal>
+        <h2 class="cs-section-title">Problem</h2>
+        <div class="cs-grid triple">
+          <div class="cs-card">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg></div>
+            <h4>Complex Player Trading</h4>
+            <p>Users found buying and selling players confusing, with unclear pricing, wallet balances, and transaction confirmations.</p>
+          </div>
+          <div class="cs-card">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M3 3v18h18"/><path d="M18 17V9M13 17V5M8 17v-3"/></svg></div>
+            <h4>League Management Friction</h4>
+            <p>Creating leagues, inviting members, and tracking standings required too many steps and lacked clear hierarchy.</p>
+          </div>
+          <div class="cs-card">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+            <h4>Wallet Confusion</h4>
+            <p>Users struggled to understand their wallet balance, transaction history, and how buy-ins affected their available funds.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="cs-section" data-reveal>
+        <h2 class="cs-section-title">Research</h2>
+        <div class="cs-grid triple">
+          <div class="cs-card">
+            <h4>Competitive Analysis</h4>
+            <p>Analyzed fantasy apps like DraftKings, FanDuel, and Sleeper to identify best practices for player trading and league management.</p>
+          </div>
+          <div class="cs-card">
+            <h4>User Behavior Analysis</h4>
+            <p>Studied trading patterns, peak usage times during NFL games, and common user flows to understand engagement drivers.</p>
+          </div>
+          <div class="cs-card">
+            <h4>Pain Point Mapping</h4>
+            <p>Mapped the complete journey from joining a league to making first trade, identifying 7 critical friction points.</p>
+          </div>
+        </div>
+        <div class="cs-image-grid" style="margin-top:32px;">
+          <div class="cs-image-box">
+            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=375&fit=crop" alt="Fantasy sports competitive analysis">
+          </div>
+          <div class="cs-image-box">
+            <img src="https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=600&h=375&fit=crop" alt="User journey mapping">
+          </div>
+        </div>
+      </div>
+
+      <div class="cs-section" data-reveal>
+        <h2 class="cs-section-title">Key Findings</h2>
+        <ul class="cs-list">
+          <li><strong>Buy/sell confusion:</strong> Users needed clearer confirmation of trades showing current balance, player cost, and resulting balance</li>
+          <li><strong>League invite friction:</strong> Inviting friends to leagues required too many steps — users wanted in-app invites and QR codes</li>
+          <li><strong>Achievement motivation:</strong> Users were highly motivated by achievements and badges but couldn't easily track progress</li>
+          <li><strong>Wallet visibility:</strong> Transaction history and wallet balance needed to be more prominent and easier to understand</li>
+          <li><strong>Role clarity:</strong> Users wanted clearer distinction between player tiers (Rookie, Amateur, Pro, Head Coach)</li>
+        </ul>
+      </div>
+
+      <div class="cs-section" data-reveal>
+        <h2 class="cs-section-title">Design Goals</h2>
+        <div class="cs-grid quad">
+          <div class="cs-card">
+            <h4>Simplify Trading</h4>
+            <p>Make buying and selling players intuitive with clear pricing, balance updates, and confirmation flows.</p>
+          </div>
+          <div class="cs-card">
+            <h4>Streamline Leagues</h4>
+            <p>Enable quick league creation and member invites through in-app search and shareable QR codes.</p>
+          </div>
+          <div class="cs-card">
+            <h4>Gamify Experience</h4>
+            <p>Surface achievements, badges, and progress to drive engagement throughout the NFL season.</p>
+          </div>
+          <div class="cs-card">
+            <h4>Wallet Clarity</h4>
+            <p>Make wallet balance and transaction history immediately clear and accessible from any screen.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="cs-section" data-reveal>
+        <h2 class="cs-section-title">UX Process</h2>
+        <div class="cs-grid triple">
+          <div class="cs-card">
+            <h4>User Flows</h4>
+            <p>Redesigned core user flows for onboarding, discovery, analysis, and trading — reducing average steps by 40%.</p>
+          </div>
+          <div class="cs-card">
+            <h4>Mobile Wireframes</h4>
+            <p>Created mobile-first wireframes optimized for thumb reach, one-handed use, and quick scanning.</p>
+          </div>
+          <div class="cs-card">
+            <h4>Rapid Prototyping</h4>
+            <p>Built interactive prototypes for weekly testing cycles, enabling fast validation and iteration.</p>
+          </div>
+          <div class="cs-card">
+            <h4>Iterative Design</h4>
+            <p>Conducted 4 rounds of design reviews with stakeholders and users, refining based on feedback.</p>
+          </div>
+          <div class="cs-card">
+            <h4>Usability Testing</h4>
+            <p>Ran 8 remote usability sessions focusing on onboarding completion and trading task success.</p>
+          </div>
+          <div class="cs-card">
+            <h4>A/B Validation</h4>
+            <p>Validated key design decisions through A/B testing on onboarding variants and dashboard layouts.</p>
+          </div>
+        </div>
+        <div class="cs-image-grid triple" style="margin-top:32px;">
+          <div class="cs-image-box tall">
+            <img src="https://images.unsplash.com/photo-1555774698-0b77e0d5fac6?w=400&h=600&fit=crop" alt="Mobile wireframe">
+          </div>
+          <div class="cs-image-box tall">
+            <img src="https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=400&h=600&fit=crop" alt="Trading flow diagram">
+          </div>
+          <div class="cs-image-box tall">
+            <img src="https://images.unsplash.com/photo-1559028012-481c04fa702d?w=400&h=600&fit=crop" alt="Interactive prototype">
+          </div>
+        </div>
+      </div>
+
+      <div class="cs-section" data-reveal>
+        <h2 class="cs-section-title">Design Decisions</h2>
+        <div class="cs-grid">
+          <div class="cs-card">
+            <h4>Buy Player Flow</h4>
+            <p>Designed a clear buy modal showing player info, current balance, cost, and resulting balance with swap suggestions when roster conflicts exist.</p>
+          </div>
+          <div class="cs-card">
+            <h4>Dark Theme UI</h4>
+            <p>Implemented a premium dark theme with accent colors for status indicators (green for credits, red for debits, cyan for actions).</p>
+          </div>
+          <div class="cs-card">
+            <h4>League Invite System</h4>
+            <p>Created dual invite methods: in-app user search with role badges and shareable Link/QR for external invites.</p>
+          </div>
+          <div class="cs-card">
+            <h4>Achievement Badges</h4>
+            <p>Designed market/trading badges (Bargain Bin, Flip Master) and league outcome badges with clear unlock criteria.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="cs-section" data-reveal>
+        <h2 class="cs-section-title">Final Solution</h2>
+        <div class="cs-grid">
+          <div class="cs-card">
+            <h4>Player Marketplace</h4>
+            <p>Buy/sell players with clear pricing, balance preview, and smart swap suggestions when positions conflict.</p>
+          </div>
+          <div class="cs-card">
+            <h4>League Management</h4>
+            <p>Create leagues, invite members by username or QR code, and track standings with role-based permissions.</p>
+          </div>
+          <div class="cs-card">
+            <h4>Wallet & Economy</h4>
+            <p>Admin portal for transaction management with filtering by wallet type, transaction type, and detailed status tracking.</p>
+          </div>
+          <div class="cs-card">
+            <h4>Achievements System</h4>
+            <p>Gamified experience with Market/Trading badges and League Outcome achievements to drive engagement.</p>
+          </div>
+        </div>
+        <!-- <div class="cs-image-grid triple" style="margin-top:32px;">
+          <div class="cs-image-box tall">
+            <img src="https://images.unsplash.com/photo-1566577739112-5180d4bf9390?w=400&h=600&fit=crop" alt="NFL Football game">
+          </div>
+          <div class="cs-image-box tall">
+            <img src="https://images.unsplash.com/photo-1504450758481-7338bbe7524a?w=400&h=600&fit=crop" alt="Football player trading">
+          </div>
+          <div class="cs-image-box tall">
+            <img src="https://images.unsplash.com/photo-1611162618071-b39a2ec055fb?w=400&h=600&fit=crop" alt="Mobile app interface">
+          </div>
+        </div> -->
+      </div>
+
+      <div class="cs-section" data-reveal>
+        <h2 class="cs-section-title">Results</h2>
+        <div class="cs-metrics">
+          <div class="cs-metric">
+            <div class="value">20%</div>
+            <div class="label">Faster First Trade</div>
+          </div>
+          <div class="cs-metric">
+            <div class="value">15%</div>
+            <div class="label">Higher Daily Engagement</div>
+          </div>
+          <div class="cs-metric">
+            <div class="value">30%</div>
+            <div class="label">More League Invites Sent</div>
+          </div>
+          <div class="cs-metric">
+            <div class="value">25%</div>
+            <div class="label">Achievement Completion Rate</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cs-section" data-reveal>
+        <h2 class="cs-section-title">Key Learnings</h2>
+        <div class="cs-learnings">
+          <h4>What This Project Taught Me</h4>
+          <ul>
+            <li><strong>Balance clarity matters:</strong> Showing current balance, cost, and resulting balance in buy flows eliminated user anxiety about transactions.</li>
+            <li><strong>Gamification drives retention:</strong> Achievement badges and progress tracking kept users engaged throughout the NFL season.</li>
+            <li><strong>Social features need friction-free invites:</strong> In-app invites and QR codes dramatically increased league participation over link-only sharing.</li>
+            <li><strong>Dark themes need careful contrast:</strong> Status colors (completed/failed) required extra attention to maintain accessibility in dark UI.</li>
+          </ul>
+        </div>
+      </div>
+
+      <nav class="project-nav">
+        <a href="project-revup.html" class="project-nav-item">
+          <span class="label">Previous Project</span>
+          <span class="title">← Revup</span>
+        </a>
+        <a href="niharika-portfolio.html#work" class="project-nav-item next">
+          <span class="label">Back to</span>
+          <span class="title">All Projects →</span>
+        </a>
+      </nav>
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap footer-inner">
+      <span>© 2026 Niharika Suru</span>
+      <span>Product Designer · UX Designer</span>
+    </div>
+  </footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 8);
+  }, { passive: true });
+
+  const revealEls = document.querySelectorAll('[data-reveal]');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('is-visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => io.observe(el));
+</script>
+</body>
+</html>

@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Revup — Niharika Suru</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FFFFFF;
+    --cloud:#F6F7F9;
+    --cloud-2:#F0F2F4;
+    --ink:#12151C;
+    --slate:#5C6470;
+    --mist:#97A1AC;
+    --line:#E7E9EC;
+    --accent:#1B6E62;
+    --accent-2:#4FA98E;
+    --accent-soft:#EAF4F1;
+    --radius-lg:22px;
+    --radius-md:16px;
+    --radius-sm:10px;
+    --maxw:1180px;
+    --ease:cubic-bezier(.22,.61,.36,1);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Manrope',sans-serif;
+    margin:0;
+    letter-spacing:-0.02em;
+    color:var(--ink);
+  }
+  p{margin:0;}
+  a{color:inherit;text-decoration:none;}
+  img,svg{display:block;max-width:100%;}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    font-weight:500;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--accent);
+  }
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px;}
+  section{position:relative;}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px;}
+
+  .nav{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    background:rgba(255,255,255,0.7);
+    backdrop-filter:blur(14px) saturate(140%);
+    -webkit-backdrop-filter:blur(14px) saturate(140%);
+    border-bottom:1px solid transparent;
+    transition:border-color .3s var(--ease), background .3s var(--ease);
+  }
+  .nav.scrolled{border-bottom-color:var(--line);}
+  .nav-inner{
+    max-width:var(--maxw);margin:0 auto;padding:18px 32px;
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .nav-logo{font-family:'Manrope',sans-serif;font-weight:700;font-size:17px;letter-spacing:-0.01em;}
+  .nav-logo span{color:var(--accent);}
+  .nav-links{display:flex;align-items:center;gap:36px;list-style:none;margin:0;padding:0;}
+  .nav-links a{font-size:14.5px;font-weight:500;color:var(--slate);transition:color .2s var(--ease);}
+  .nav-links a:hover{color:var(--ink);}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:'Inter',sans-serif;font-weight:600;font-size:14.5px;
+    padding:11px 22px;border-radius:999px;
+    cursor:pointer;border:1px solid transparent;
+    transition:transform .25s var(--ease), box-shadow .25s var(--ease), background .25s var(--ease), border-color .25s var(--ease);
+    white-space:nowrap;
+  }
+  .btn.primary{
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));
+    color:#fff;
+    box-shadow:0 1px 2px rgba(18,21,28,0.06), 0 8px 20px -10px rgba(27,110,98,0.55);
+  }
+  .btn.primary:hover{transform:translateY(-2px);box-shadow:0 4px 8px rgba(18,21,28,0.06), 0 14px 28px -10px rgba(27,110,98,0.6);}
+  .btn.ghost{background:transparent;border-color:var(--line);color:var(--ink);}
+  .btn.ghost:hover{border-color:var(--accent);background:var(--accent-soft);transform:translateY(-2px);}
+  .btn.small{padding:9px 16px;font-size:13.5px;}
+  .nav-cta{display:flex;align-items:center;gap:14px;}
+
+  .project-hero{padding:140px 0 80px;background:var(--cloud);border-bottom:1px solid var(--line);}
+  .project-hero-inner{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;}
+  .project-hero-text .eyebrow{margin-bottom:16px;display:block;}
+  .project-hero-text h1{font-size:clamp(36px,4.5vw,52px);font-weight:700;line-height:1.1;margin-bottom:20px;}
+  .project-hero-text .role-tag{display:inline-block;background:var(--accent-soft);color:var(--accent);padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;margin-bottom:16px;}
+  .project-hero-text p{font-size:18px;color:var(--slate);line-height:1.7;}
+  .project-hero-image{background:var(--cloud-2);border:1px solid var(--line);border-radius:var(--radius-lg);aspect-ratio:16/10;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+  .project-hero-image img{width:100%;height:100%;object-fit:cover;}
+  .project-hero-image .placeholder{color:var(--mist);font-size:14px;text-align:center;padding:20px;}
+
+  .project-content{padding:80px 0;}
+  .cs-section{margin-bottom:64px;}
+  .cs-section-title{font-size:24px;font-weight:700;margin-bottom:20px;display:flex;align-items:center;gap:12px;}
+  .cs-section-title::before{content:"";width:4px;height:24px;background:var(--accent);border-radius:2px;}
+  .cs-section p{font-size:16px;color:var(--slate);line-height:1.7;max-width:800px;}
+  .cs-section p + p{margin-top:14px;}
+
+  .cs-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:24px;}
+  .cs-grid.triple{grid-template-columns:repeat(3,1fr);}
+  .cs-grid.quad{grid-template-columns:repeat(4,1fr);}
+  .cs-card{background:var(--cloud);border:1px solid var(--line);border-radius:var(--radius-md);padding:24px;transition:border-color .25s var(--ease), transform .25s var(--ease);}
+  .cs-card:hover{border-color:var(--accent);transform:translateY(-2px);}
+  .cs-card h4{font-family:'Manrope',sans-serif;font-size:16px;font-weight:700;margin-bottom:10px;color:var(--ink);}
+  .cs-card p{font-size:14px;color:var(--slate);line-height:1.55;}
+  .cs-card .icon{width:40px;height:40px;background:var(--accent-soft);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;}
+  .cs-card .icon svg{width:20px;height:20px;stroke:var(--accent);}
+
+  .cs-list{list-style:none;padding:0;margin:20px 0 0;display:grid;gap:12px;}
+  .cs-list li{display:flex;align-items:flex-start;gap:12px;font-size:15px;color:var(--slate);line-height:1.6;}
+  .cs-list li::before{content:"";width:6px;height:6px;background:var(--accent);border-radius:50%;margin-top:8px;flex-shrink:0;}
+
+  .cs-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:28px;}
+  .cs-metric{background:linear-gradient(135deg,var(--accent-soft) 0%,#fff 100%);border:1px solid var(--line);border-radius:var(--radius-md);padding:28px 24px;text-align:center;transition:transform .25s var(--ease);}
+  .cs-metric:hover{transform:translateY(-3px);}
+  .cs-metric .value{font-family:'Manrope',sans-serif;font-size:36px;font-weight:800;color:var(--accent);line-height:1;}
+  .cs-metric .label{font-size:13px;color:var(--slate);margin-top:8px;font-weight:500;}
+
+  .cs-image-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:28px;}
+  .cs-image-grid.triple{grid-template-columns:repeat(3,1fr);}
+  .cs-image-box{background:var(--cloud-2);border:1px solid var(--line);border-radius:var(--radius-md);aspect-ratio:16/10;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;}
+  .cs-image-box.tall{aspect-ratio:9/16;}
+  .cs-image-box.square{aspect-ratio:1/1;}
+  .cs-image-box img{width:100%;height:100%;object-fit:cover;}
+  .cs-image-box .placeholder{color:var(--mist);font-size:13px;text-align:center;padding:16px;}
+
+  .cs-learnings{background:var(--accent-soft);border:1px solid rgba(27,110,98,0.2);border-radius:var(--radius-lg);padding:36px;margin-top:28px;}
+  .cs-learnings h4{font-family:'Manrope',sans-serif;font-size:18px;font-weight:700;margin-bottom:16px;color:var(--accent);}
+  .cs-learnings ul{list-style:none;padding:0;margin:0;display:grid;gap:14px;}
+  .cs-learnings li{position:relative;padding-left:28px;font-size:15px;color:var(--ink);line-height:1.6;}
+  .cs-learnings li::before{content:"✓";color:var(--accent);font-weight:700;position:absolute;left:0;top:0;}
+
+  .project-nav{display:flex;justify-content:space-between;align-items:center;padding:48px 0;border-top:1px solid var(--line);margin-top:48px;}
+  .project-nav-item{display:flex;flex-direction:column;gap:4px;}
+  .project-nav-item.next{align-items:flex-end;text-align:right;}
+  .project-nav-item .label{font-size:12px;color:var(--mist);text-transform:uppercase;letter-spacing:0.05em;}
+  .project-nav-item .title{font-family:'Manrope',sans-serif;font-size:18px;font-weight:700;color:var(--ink);transition:color .2s var(--ease);}
+  .project-nav-item:hover .title{color:var(--accent);}
+
+  footer{padding:32px 0;border-top:1px solid var(--line);background:var(--cloud);}
+  .footer-inner{display:flex;justify-content:space-between;align-items:center;font-size:13.5px;color:var(--mist);}
+
+  [data-reveal]{opacity:0;transform:translateY(18px);transition:opacity .7s var(--ease), transform .7s var(--ease);}
+  [data-reveal].is-visible{opacity:1;transform:translateY(0);}
+
+  @media (max-width:980px){
+    .project-hero-inner{grid-template-columns:1fr;}
+    .project-hero-image{order:-1;}
+    .cs-grid,.cs-grid.triple,.cs-grid.quad{grid-template-columns:1fr;}
+    .cs-metrics{grid-template-columns:repeat(2,1fr);}
+    .cs-image-grid,.cs-image-grid.triple{grid-template-columns:1fr;}
+  }
+  @media (max-width:680px){
+    .wrap{padding:0 22px;}
+    .nav-links{display:none;}
+    .project-hero{padding:120px 0 60px;}
+    .cs-metrics{grid-template-columns:1fr;}
+    .project-nav{flex-direction:column;gap:24px;}
+    .project-nav-item,.project-nav-item.next{align-items:center;text-align:center;}
+    .footer-inner{flex-direction:column;gap:8px;text-align:center;}
+  }
+</style>
+</head>
+<body>
+
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="niharika-portfolio.html" class="nav-logo">Niharika <span>Suru</span></a>
+      <ul class="nav-links">
+        <li><a href="niharika-portfolio.html#work">Work</a></li>
+        <li><a href="niharika-portfolio.html#about">About</a></li>
+        <li><a href="niharika-portfolio.html#process">Process</a></li>
+        <li><a href="niharika-portfolio.html#contact">Contact</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a class="btn ghost small" href="niharika-portfolio.html#work">← All Projects</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="project-hero">
+    <div class="wrap project-hero-inner">
+      <div class="project-hero-text" data-reveal>
+        <span class="eyebrow">Enterprise SaaS · CRM Platform</span>
+        <span class="role-tag">Product Designer</span>
+        <h1>Revup</h1>
+        <p>A comprehensive CRM platform for lead and deal tracking with integrated calendar, task management, notes, meeting scheduling, and Sales Pursuit AI — resulting in 20% efficiency improvement and 15% faster task completion.</p>
+      </div>
+      <div class="project-hero-image" data-reveal>
+        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=500&fit=crop" alt="Revup CRM Dashboard">
+      </div>
+    </div>
+  </header>
+
+  <main class="project-content">
+    <div class="wrap">
+
+      <div class="cs-section" data-reveal>
+        <h2 class="cs-section-title">Overview</h2>
+        <p>Revup is a comprehensive CRM platform similar to Zoho, designed for sales teams to track leads and deals through the entire pipeline. The platform enables users to create notes, manage tasks, schedule meetings, and access an integrated calendar — all while leveraging Sales Pursuit AI for intelligent insights and automation.</p>
+        <p>This project documents the UX redesign focused on unifying lead management, deal tracking, and event creation into a cohesive experience that reduces context-switching and improves sales team productivity.</p>
+      </div>
+
+      <div class="cs-section" data-reveal>
+        <h2 class="cs-section-title">Problem</h2>
+        <div class="cs-grid triple">
+          <div class="cs-card">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77"/></svg></div>
+            <h4>Fragmented Workflows</h4>
+            <p>Users struggled with fragmented workflows requiring them to jump between multiple screens to complete simple tasks.</p>
+          </div>
+          <div class="cs-card">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>
+            <h4>Unclear Task Management</h4>
+            <p>Task management lacked clarity — users couldn't easily see priorities, deadlines, or ownership at a glance.</p>
+          </div>
+          <div class="cs-card">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M12 18v-6M9 15h6"/></svg></div>
+            <h4>Excessive Navigation</h4>
+            <p>Multiple actions required excessive navigation, with users averaging 7+ clicks to complete routine lead management tasks.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="cs-section" data-reveal>
+        <h2 class="cs-section-title">Research</h2>
+        <div class="cs-grid">
+          <div class="cs-card">
+            <h4>Stakeholder Discussions</h4>
+            <p>Conducted 8 stakeholder interviews with sales managers, account executives, and operations leads to understand business requirements and pain points.</p>
+          </div>
+          <div class="cs-card">
+            <h4>Workflow Analysis</h4>
+            <p>Mapped existing workflows across 5 key user tasks, identifying bottlenecks, redundancies, and opportunities for consolidation.</p>
+          </div>
+          <div class="cs-card">
+            <h4>Journey Mapping</h4>
+            <p>Created detailed journey maps for primary personas, highlighting emotional pain points and moments of friction.</p>
+          </div>
+          <div class="cs-card">
+            <h4>Task Analysis</h4>
+            <p>Performed task analysis on the 10 most frequent user actions, measuring time-on-task and error rates.</p>
+          </div>
+        </div>
+        <div class="cs-image-grid" style="margin-top:32px;">
+          <div class="cs-image-box">
+            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=375&fit=crop" alt="Sales rep user journey">
+          </div>
+          <div class="cs-image-box">
+            <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=600&h=375&fit=crop" alt="Workflow analysis">
+          </div>
+        </div>
+      </div>
+
+      <div class="cs-section" data-reveal>
+        <h2 class="cs-section-title">Key Findings</h2>
+        <ul class="cs-list">
+          <li><strong>Navigation overhead:</strong> Users spent 40% of their time navigating rather than completing tasks</li>
+          <li><strong>Unclear ownership:</strong> Task ownership was unclear, leading to dropped leads and duplicated effort</li>
+          <li><strong>Communication friction:</strong> Communication workflows created friction with no centralized history or context</li>
+          <li><strong>Information overload:</strong> Dashboards displayed too much information without clear prioritization</li>
+          <li><strong>Mobile gaps:</strong> Field sales teams couldn't effectively use the platform on mobile devices</li>
+        </ul>
+      </div>
+
+      <div class="cs-section" data-reveal>
+        <h2 class="cs-section-title">Design Goals</h2>
+        <div class="cs-grid quad">
+          <div class="cs-card">
+            <h4>Reduce Complexity</h4>
+            <p>Simplify multi-step workflows into streamlined actions that require fewer clicks and less cognitive load.</p>
+          </div>
+          <div class="cs-card">
+            <h4>Improve Efficiency</h4>
+            <p>Enable users to complete their most important tasks faster through better information architecture.</p>
+          </div>
+          <div class="cs-card">
+            <h4>Increase Visibility</h4>
+            <p>Provide clear pipeline visibility with at-a-glance understanding of priorities and status.</p>
+          </div>
+          <div class="cs-card">
+            <h4>Support Collaboration</h4>
+            <p>Enable seamless handoffs and communication between team members with shared context.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="cs-section" data-reveal>
+        <h2 class="cs-section-title">UX Process</h2>
+        <div class="cs-grid triple">
+          <div class="cs-card">
+            <h4>Journey Maps</h4>
+            <p>Created comprehensive journey maps for 3 primary personas, identifying 12 key improvement opportunities.</p>
+          </div>
+          <div class="cs-card">
+            <h4>Information Architecture</h4>
+            <p>Restructured the IA based on user mental models, consolidating 23 screens into 14 focused views.</p>
+          </div>
+          <div class="cs-card">
+            <h4>Wireframes</h4>
+            <p>Developed low-fidelity wireframes for all key flows, iterating through 3 rounds of internal review.</p>
+          </div>
+          <div class="cs-card">
+            <h4>Interactive Prototypes</h4>
+            <p>Built high-fidelity Figma prototypes for usability testing with realistic data and interactions.</p>
+          </div>
+          <div class="cs-card">
+            <h4>Usability Validation</h4>
+            <p>Conducted 6 usability sessions with target users, identifying and addressing 8 critical issues.</p>
+          </div>
+          <div class="cs-card">
+            <h4>Design Iteration</h4>
+            <p>Refined designs based on feedback, creating final specifications for development handoff.</p>
+          </div>
+        </div>
+        <div class="cs-image-grid triple" style="margin-top:32px;">
+          <div class="cs-image-box">
+            <img src="https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=400&h=250&fit=crop" alt="Lead management flow">
+          </div>
+          <div class="cs-image-box">
+            <img src="https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=400&h=250&fit=crop" alt="Dashboard wireframes">
+          </div>
+          <div class="cs-image-box">
+            <img src="https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?w=400&h=250&fit=crop" alt="Interactive prototype">
+          </div>
+        </div>
+      </div>
+
+      <div class="cs-section" data-reveal>
+        <h2 class="cs-section-title">Design Decisions</h2>
+        <div class="cs-grid">
+          <div class="cs-card">
+            <h4>Unified Dashboard</h4>
+            <p>Designed a dashboard showing leads by assignee, lead status counts, and lead source analytics — giving managers instant pipeline visibility.</p>
+          </div>
+          <div class="cs-card">
+            <h4>Integrated Calendar</h4>
+            <p>Built calendar integration allowing users to schedule meetings directly from lead/deal profiles and sync with external calendars.</p>
+          </div>
+          <div class="cs-card">
+            <h4>Quick Event Creation</h4>
+            <p>Enabled one-click creation of notes, tasks, and meetings from any context — reducing time to log activities by 60%.</p>
+          </div>
+          <div class="cs-card">
+            <h4>Sales Pursuit AI</h4>
+            <p>Integrated AI-powered insights for lead scoring, next-best-action recommendations, and automated follow-up reminders.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="cs-section" data-reveal>
+        <h2 class="cs-section-title">Final Solution</h2>
+        <div class="cs-grid">
+          <div class="cs-card">
+            <h4>Lead & Deal Dashboard</h4>
+            <p>A unified dashboard with tabs for Deals and Leads, showing total counts, conversion metrics, leads by assignee chart, and funnel visualization.</p>
+          </div>
+          <div class="cs-card">
+            <h4>Activity Management</h4>
+            <p>Streamlined creation of notes, tasks, and scheduled meetings with context preserved from any lead or deal record.</p>
+          </div>
+          <div class="cs-card">
+            <h4>Calendar Integration</h4>
+            <p>Full calendar module (My Tasks) allowing users to view, create, and manage meetings alongside their daily schedule.</p>
+          </div>
+          <div class="cs-card">
+            <h4>Sales Pursuit AI</h4>
+            <p>AI-powered module providing lead prioritization, deal probability scoring, and intelligent automation suggestions.</p>
+          </div>
+        </div>
+        <div class="cs-image-grid" style="margin-top:32px;">
+          <div class="cs-image-box">
+            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=375&fit=crop" alt="Redesigned lead dashboard">
+          </div>
+          <div class="cs-image-box">
+            <img src="https://images.unsplash.com/photo-1542744094-3a31f272c490?w=600&h=375&fit=crop" alt="Lead profile with activity">
+          </div>
+        </div>
+      </div>
+
+      <div class="cs-section" data-reveal>
+        <h2 class="cs-section-title">Results</h2>
+        <div class="cs-metrics">
+          <div class="cs-metric">
+            <div class="value">20%</div>
+            <div class="label">Sales Rep Efficiency</div>
+          </div>
+          <div class="cs-metric">
+            <div class="value">15%</div>
+            <div class="label">Faster Lead Response</div>
+          </div>
+          <div class="cs-metric">
+            <div class="value">25%</div>
+            <div class="label">More Deals Tracked</div>
+          </div>
+          <div class="cs-metric">
+            <div class="value">32%</div>
+            <div class="label">Fewer Missed Follow-ups</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cs-section" data-reveal>
+        <h2 class="cs-section-title">Key Learnings</h2>
+        <div class="cs-learnings">
+          <h4>What This Project Taught Me</h4>
+          <ul>
+            <li><strong>Unified views reduce friction:</strong> Combining leads, deals, and calendar in one interface eliminated constant tab-switching and improved focus.</li>
+            <li><strong>AI features need clear value:</strong> Sales Pursuit AI adoption increased when we showed concrete time savings rather than abstract "intelligence."</li>
+            <li><strong>Context is king:</strong> Keeping notes, tasks, and meetings attached to lead/deal records eliminated the need for users to hunt for information.</li>
+            <li><strong>Quick actions matter:</strong> One-click meeting scheduling and note creation drove daily engagement more than any dashboard visualization.</li>
+          </ul>
+        </div>
+      </div>
+
+      <nav class="project-nav">
+        <a href="project-figma-migration.html" class="project-nav-item">
+          <span class="label">Previous Project</span>
+          <span class="title">← Figma Migration</span>
+        </a>
+        <a href="project-f2mx.html" class="project-nav-item next">
+          <span class="label">Next Project</span>
+          <span class="title">F2MX →</span>
+        </a>
+      </nav>
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap footer-inner">
+      <span>© 2026 Niharika Suru</span>
+      <span>Product Designer · UX Designer</span>
+    </div>
+  </footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 8);
+  }, { passive: true });
+
+  const revealEls = document.querySelectorAll('[data-reveal]');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('is-visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => io.observe(el));
+</script>
+</body>
+</html>

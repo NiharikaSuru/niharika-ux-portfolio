@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Adobe XD to Figma Migration — Niharika Suru</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FFFFFF;
+    --cloud:#F6F7F9;
+    --cloud-2:#F0F2F4;
+    --ink:#12151C;
+    --slate:#5C6470;
+    --mist:#97A1AC;
+    --line:#E7E9EC;
+    --accent:#1B6E62;
+    --accent-2:#4FA98E;
+    --accent-soft:#EAF4F1;
+    --radius-lg:22px;
+    --radius-md:16px;
+    --radius-sm:10px;
+    --maxw:1180px;
+    --ease:cubic-bezier(.22,.61,.36,1);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Manrope',sans-serif;
+    margin:0;
+    letter-spacing:-0.02em;
+    color:var(--ink);
+  }
+  p{margin:0;}
+  a{color:inherit;text-decoration:none;}
+  img,svg{display:block;max-width:100%;}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    font-weight:500;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--accent);
+  }
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px;}
+  section{position:relative;}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px;}
+
+  /* ---------- NAV ---------- */
+  .nav{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    background:rgba(255,255,255,0.7);
+    backdrop-filter:blur(14px) saturate(140%);
+    -webkit-backdrop-filter:blur(14px) saturate(140%);
+    border-bottom:1px solid transparent;
+    transition:border-color .3s var(--ease), background .3s var(--ease);
+  }
+  .nav.scrolled{border-bottom-color:var(--line);}
+  .nav-inner{
+    max-width:var(--maxw);margin:0 auto;padding:18px 32px;
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .nav-logo{font-family:'Manrope',sans-serif;font-weight:700;font-size:17px;letter-spacing:-0.01em;}
+  .nav-logo span{color:var(--accent);}
+  .nav-links{display:flex;align-items:center;gap:36px;list-style:none;margin:0;padding:0;}
+  .nav-links a{
+    font-size:14.5px;font-weight:500;color:var(--slate);
+    transition:color .2s var(--ease);
+  }
+  .nav-links a:hover{color:var(--ink);}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:'Inter',sans-serif;font-weight:600;font-size:14.5px;
+    padding:11px 22px;border-radius:999px;
+    cursor:pointer;border:1px solid transparent;
+    transition:transform .25s var(--ease), box-shadow .25s var(--ease), background .25s var(--ease), border-color .25s var(--ease);
+    white-space:nowrap;
+  }
+  .btn.primary{
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));
+    color:#fff;
+    box-shadow:0 1px 2px rgba(18,21,28,0.06), 0 8px 20px -10px rgba(27,110,98,0.55);
+  }
+  .btn.primary:hover{transform:translateY(-2px);box-shadow:0 4px 8px rgba(18,21,28,0.06), 0 14px 28px -10px rgba(27,110,98,0.6);}
+  .btn.ghost{
+    background:transparent;border-color:var(--line);color:var(--ink);
+  }
+  .btn.ghost:hover{border-color:var(--accent);background:var(--accent-soft);transform:translateY(-2px);}
+  .btn.small{padding:9px 16px;font-size:13.5px;}
+  .nav-cta{display:flex;align-items:center;gap:14px;}
+
+  /* ---------- PROJECT DETAIL STYLES ---------- */
+  .project-hero{padding:140px 0 80px;background:var(--cloud);border-bottom:1px solid var(--line);}
+  .project-hero-inner{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;}
+  .project-hero-text .eyebrow{margin-bottom:16px;display:block;}
+  .project-hero-text h1{font-size:clamp(36px,4.5vw,52px);font-weight:700;line-height:1.1;margin-bottom:20px;}
+  .project-hero-text .role-tag{display:inline-block;background:var(--accent-soft);color:var(--accent);padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;margin-bottom:16px;}
+  .project-hero-text p{font-size:18px;color:var(--slate);line-height:1.7;}
+  .project-hero-image{background:var(--cloud-2);border:1px solid var(--line);border-radius:var(--radius-lg);aspect-ratio:16/10;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+  .project-hero-image img{width:100%;height:100%;object-fit:cover;}
+  .project-hero-image .placeholder{color:var(--mist);font-size:14px;text-align:center;padding:20px;}
+
+  .project-content{padding:80px 0;}
+  .cs-section{margin-bottom:64px;}
+  .cs-section-title{font-size:24px;font-weight:700;margin-bottom:20px;display:flex;align-items:center;gap:12px;}
+  .cs-section-title::before{content:"";width:4px;height:24px;background:var(--accent);border-radius:2px;}
+  .cs-section p{font-size:16px;color:var(--slate);line-height:1.7;max-width:800px;}
+  .cs-section p + p{margin-top:14px;}
+
+  .cs-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:24px;}
+  .cs-grid.triple{grid-template-columns:repeat(3,1fr);}
+  .cs-grid.quad{grid-template-columns:repeat(4,1fr);}
+  .cs-card{background:var(--cloud);border:1px solid var(--line);border-radius:var(--radius-md);padding:24px;transition:border-color .25s var(--ease), transform .25s var(--ease);}
+  .cs-card:hover{border-color:var(--accent);transform:translateY(-2px);}
+  .cs-card h4{font-family:'Manrope',sans-serif;font-size:16px;font-weight:700;margin-bottom:10px;color:var(--ink);}
+  .cs-card p{font-size:14px;color:var(--slate);line-height:1.55;}
+  .cs-card .icon{width:40px;height:40px;background:var(--accent-soft);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;}
+  .cs-card .icon svg{width:20px;height:20px;stroke:var(--accent);}
+
+  .cs-list{list-style:none;padding:0;margin:20px 0 0;display:grid;gap:12px;}
+  .cs-list li{display:flex;align-items:flex-start;gap:12px;font-size:15px;color:var(--slate);line-height:1.6;}
+  .cs-list li::before{content:"";width:6px;height:6px;background:var(--accent);border-radius:50%;margin-top:8px;flex-shrink:0;}
+
+  .cs-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:28px;}
+  .cs-metric{background:linear-gradient(135deg,var(--accent-soft) 0%,#fff 100%);border:1px solid var(--line);border-radius:var(--radius-md);padding:28px 24px;text-align:center;transition:transform .25s var(--ease);}
+  .cs-metric:hover{transform:translateY(-3px);}
+  .cs-metric .value{font-family:'Manrope',sans-serif;font-size:36px;font-weight:800;color:var(--accent);line-height:1;}
+  .cs-metric .label{font-size:13px;color:var(--slate);margin-top:8px;font-weight:500;}
+
+  .cs-image-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:28px;}
+  .cs-image-grid.triple{grid-template-columns:repeat(3,1fr);}
+  .cs-image-box{background:var(--cloud-2);border:1px solid var(--line);border-radius:var(--radius-md);aspect-ratio:16/10;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;}
+  .cs-image-box.tall{aspect-ratio:9/16;}
+  .cs-image-box.square{aspect-ratio:1/1;}
+  .cs-image-box img{width:100%;height:100%;object-fit:cover;}
+  .cs-image-box .placeholder{color:var(--mist);font-size:13px;text-align:center;padding:16px;}
+
+  .cs-comparison{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:28px;}
+  .cs-comparison-item{border:1px solid var(--line);border-radius:var(--radius-md);overflow:hidden;}
+  .cs-comparison-header{background:var(--cloud-2);padding:14px 20px;font-family:'Manrope',sans-serif;font-weight:700;font-size:14px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px;}
+  .cs-comparison-header.before{color:#C9553D;}
+  .cs-comparison-header.after{color:var(--accent);}
+  .cs-comparison-body{background:var(--paper);aspect-ratio:16/10;display:flex;align-items:center;justify-content:center;}
+  .cs-comparison-body img{width:100%;height:100%;object-fit:cover;}
+  .cs-comparison-body .placeholder{color:var(--mist);font-size:13px;}
+
+  .cs-learnings{background:var(--accent-soft);border:1px solid rgba(27,110,98,0.2);border-radius:var(--radius-lg);padding:36px;margin-top:28px;}
+  .cs-learnings h4{font-family:'Manrope',sans-serif;font-size:18px;font-weight:700;margin-bottom:16px;color:var(--accent);}
+  .cs-learnings ul{list-style:none;padding:0;margin:0;display:grid;gap:14px;}
+  .cs-learnings li{position:relative;padding-left:28px;font-size:15px;color:var(--ink);line-height:1.6;}
+  .cs-learnings li::before{content:"✓";color:var(--accent);font-weight:700;position:absolute;left:0;top:0;}
+
+  .project-nav{display:flex;justify-content:space-between;align-items:center;padding:48px 0;border-top:1px solid var(--line);margin-top:48px;}
+  .project-nav-item{display:flex;flex-direction:column;gap:4px;}
+  .project-nav-item.next{align-items:flex-end;text-align:right;}
+  .project-nav-item .label{font-size:12px;color:var(--mist);text-transform:uppercase;letter-spacing:0.05em;}
+  .project-nav-item .title{font-family:'Manrope',sans-serif;font-size:18px;font-weight:700;color:var(--ink);transition:color .2s var(--ease);}
+  .project-nav-item:hover .title{color:var(--accent);}
+
+  footer{padding:32px 0;border-top:1px solid var(--line);background:var(--cloud);}
+  .footer-inner{display:flex;justify-content:space-between;align-items:center;font-size:13.5px;color:var(--mist);}
+
+  [data-reveal]{opacity:0;transform:translateY(18px);transition:opacity .7s var(--ease), transform .7s var(--ease);}
+  [data-reveal].is-visible{opacity:1;transform:translateY(0);}
+
+  @media (max-width:980px){
+    .project-hero-inner{grid-template-columns:1fr;}
+    .project-hero-image{order:-1;}
+    .cs-grid,.cs-grid.triple,.cs-grid.quad{grid-template-columns:1fr;}
+    .cs-metrics{grid-template-columns:repeat(2,1fr);}
+    .cs-image-grid,.cs-image-grid.triple{grid-template-columns:1fr;}
+    .cs-comparison{grid-template-columns:1fr;}
+  }
+  @media (max-width:680px){
+    .wrap{padding:0 22px;}
+    .nav-links{display:none;}
+    .project-hero{padding:120px 0 60px;}
+    .cs-metrics{grid-template-columns:1fr;}
+    .project-nav{flex-direction:column;gap:24px;}
+    .project-nav-item,.project-nav-item.next{align-items:center;text-align:center;}
+    .footer-inner{flex-direction:column;gap:8px;text-align:center;}
+  }
+</style>
+</head>
+<body>
+
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="niharika-portfolio.html" class="nav-logo">Niharika <span>Suru</span></a>
+      <ul class="nav-links">
+        <li><a href="niharika-portfolio.html#work">Work</a></li>
+        <li><a href="niharika-portfolio.html#about">About</a></li>
+        <li><a href="niharika-portfolio.html#process">Process</a></li>
+        <li><a href="niharika-portfolio.html#contact">Contact</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a class="btn ghost small" href="niharika-portfolio.html#work">← All Projects</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="project-hero">
+    <div class="wrap project-hero-inner">
+      <div class="project-hero-text" data-reveal>
+        <span class="eyebrow">Design Systems · Enterprise</span>
+        <span class="role-tag">UI/UX Designer | Design Systems Contributor</span>
+        <h1>Adobe XD to Figma Migration</h1>
+        <p>A comprehensive design systems transformation that unified multiple product modules, eliminated collaboration friction, and established scalable component governance — improving team productivity by 35% and reducing UI inconsistencies by 40%.</p>
+      </div>
+      <div class="project-hero-image" data-reveal>
+        <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&h=500&fit=crop" alt="Design System Overview">
+      </div>
+    </div>
+  </header>
+
+  <main class="project-content">
+    <div class="wrap">
+
+      <div class="cs-section" data-reveal>
+        <h2 class="cs-section-title">Overview</h2>
+        <p>The organization had multiple product modules designed in Adobe XD across different teams, causing significant inconsistency in visual language, collaboration challenges due to tool limitations, and inefficient design-to-development workflows that slowed down product delivery.</p>
+        <p>This project documents the strategic migration from Adobe XD to Figma, establishing a unified design system with reusable components, design tokens, and governance rules that transformed how the design team collaborates and delivers.</p>
+      </div>
+
+      <div class="cs-section" data-reveal>
+        <h2 class="cs-section-title">Problem</h2>
+        <div class="cs-grid quad">
+          <div class="cs-card">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></div>
+            <h4>Disconnected Files</h4>
+            <p>Teams worked across disconnected design files with no single source of truth, causing version conflicts and duplicated effort.</p>
+          </div>
+          <div class="cs-card">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg></div>
+            <h4>Design Inconsistencies</h4>
+            <p>Visual inconsistencies existed across modules — different button styles, spacing, and color applications created a fragmented user experience.</p>
+          </div>
+          <div class="cs-card">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+            <h4>Inefficient Handoff</h4>
+            <p>Developer handoff was inefficient with manual spec documentation, leading to implementation errors and extended QA cycles.</p>
+          </div>
+          <div class="cs-card">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div>
+            <h4>Limited Reuse</h4>
+            <p>Component reuse was limited, with designers recreating similar elements repeatedly instead of leveraging a shared library.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="cs-section" data-reveal>
+        <h2 class="cs-section-title">Objectives</h2>
+        <ul class="cs-list">
+          <li>Improve visual and interaction consistency across all product modules</li>
+          <li>Establish a scalable design system with reusable components and clear governance</li>
+          <li>Reduce design rework through better documentation and shared libraries</li>
+          <li>Improve cross-functional collaboration between design, development, and product teams</li>
+          <li>Create a foundation for rapid prototyping and design iteration</li>
+        </ul>
+      </div>
+
+      <div class="cs-section" data-reveal>
+        <h2 class="cs-section-title">Discovery</h2>
+        <p>The discovery phase involved a comprehensive audit of existing design assets and collaboration with stakeholders to understand pain points.</p>
+        <div class="cs-grid">
+          <div class="cs-card">
+            <h4>Adobe XD File Audit</h4>
+            <p>Analyzed 47 design files across 8 product modules, documenting component variations, inconsistencies, and reuse opportunities.</p>
+          </div>
+          <div class="cs-card">
+            <h4>Duplicate Component Analysis</h4>
+            <p>Identified 156 duplicate or near-duplicate components that could be consolidated into a unified component library.</p>
+          </div>
+          <div class="cs-card">
+            <h4>Developer Pain Point Review</h4>
+            <p>Conducted interviews with 12 developers to understand handoff challenges, implementation blockers, and documentation gaps.</p>
+          </div>
+          <div class="cs-card">
+            <h4>Inconsistency Mapping</h4>
+            <p>Created a visual inconsistency map highlighting 23 areas where design language diverged across modules.</p>
+          </div>
+        </div>
+        <div class="cs-image-grid" style="margin-top:32px;">
+          <div class="cs-image-box">
+            <img src="https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=600&h=375&fit=crop" alt="Component inventory spreadsheet">
+          </div>
+          <div class="cs-image-box">
+            <img src="https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=600&h=375&fit=crop" alt="Inconsistency Map">
+          </div>
+        </div>
+      </div>
+
+      <div class="cs-section" data-reveal>
+        <h2 class="cs-section-title">Process</h2>
+        <p>The migration followed a structured approach to ensure minimal disruption while maximizing the benefits of the new design system.</p>
+        <div class="cs-grid triple">
+          <div class="cs-card">
+            <h4>1. Migration Planning</h4>
+            <p>Developed a phased migration roadmap prioritizing high-impact modules first, with clear milestones and stakeholder alignment.</p>
+          </div>
+          <div class="cs-card">
+            <h4>2. Component Inventory</h4>
+            <p>Created a comprehensive inventory of all UI components, categorizing by type, usage frequency, and complexity level.</p>
+          </div>
+          <div class="cs-card">
+            <h4>3. Design Token Creation</h4>
+            <p>Established design tokens for colors, spacing, typography, shadows, and borders — creating a single source of truth.</p>
+          </div>
+          <div class="cs-card">
+            <h4>4. Typography Standardization</h4>
+            <p>Defined a modular type scale with clear hierarchy, responsive sizing, and accessibility compliance.</p>
+          </div>
+          <div class="cs-card">
+            <h4>5. Color System Creation</h4>
+            <p>Built a comprehensive color system with semantic naming, accessibility-checked contrast ratios, and dark mode support.</p>
+          </div>
+          <div class="cs-card">
+            <h4>6. Component Library</h4>
+            <p>Designed and documented 84 reusable components with variants, states, and usage guidelines.</p>
+          </div>
+        </div>
+        <div class="cs-image-grid triple" style="margin-top:32px;">
+          <div class="cs-image-box">
+            <img src="https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=400&h=250&fit=crop" alt="Figma component overview">
+          </div>
+          <div class="cs-image-box">
+            <img src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=400&h=250&fit=crop" alt="Design Tokens documentation">
+          </div>
+          <div class="cs-image-box">
+            <img src="https://images.unsplash.com/photo-1618788372246-79faff0c3742?w=400&h=250&fit=crop" alt="Typography System">
+          </div>
+        </div>
+      </div>
+
+      <div class="cs-section" data-reveal>
+        <h2 class="cs-section-title">Design Decisions</h2>
+        <div class="cs-grid">
+          <div class="cs-card">
+            <h4>Why Figma?</h4>
+            <p>Real-time collaboration, robust component system with variants, superior developer handoff capabilities, and growing ecosystem of plugins for automation.</p>
+          </div>
+          <div class="cs-card">
+            <h4>Why Reusable Components?</h4>
+            <p>Reduces design time, ensures consistency, enables rapid prototyping, and creates a shared language between design and development teams.</p>
+          </div>
+          <div class="cs-card">
+            <h4>Why Design Tokens?</h4>
+            <p>Enables systematic updates, supports theming and dark mode, bridges design-to-code translation, and reduces manual specification errors.</p>
+          </div>
+          <div class="cs-card">
+            <h4>Why Governance Rules?</h4>
+            <p>Prevents design drift, establishes clear contribution guidelines, ensures quality standards, and maintains long-term system integrity.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="cs-section" data-reveal>
+        <h2 class="cs-section-title">Before / After Comparison</h2>
+        <div class="cs-comparison">
+          <div class="cs-comparison-item">
+            <div class="cs-comparison-header before">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg>
+              Before: Adobe XD Workflow
+            </div>
+            <div class="cs-comparison-body">
+              <img src="https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?w=600&h=375&fit=crop" alt="Before: Fragmented XD files">
+            </div>
+          </div>
+          <div class="cs-comparison-item">
+            <div class="cs-comparison-header after">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>
+              After: Figma Design System
+            </div>
+            <div class="cs-comparison-body">
+              <img src="https://images.unsplash.com/photo-1559028012-481c04fa702d?w=600&h=375&fit=crop" alt="After: Unified Figma library">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cs-section" data-reveal>
+        <h2 class="cs-section-title">Accessibility Considerations</h2>
+        <div class="cs-grid quad">
+          <div class="cs-card">
+            <h4>WCAG Compliance</h4>
+            <p>All components built to WCAG 2.1 AA standards with documented accessibility guidelines for each pattern.</p>
+          </div>
+          <div class="cs-card">
+            <h4>Color Contrast</h4>
+            <p>Every color combination tested for 4.5:1 minimum contrast ratio with automated checking built into the design process.</p>
+          </div>
+          <div class="cs-card">
+            <h4>Typography Scaling</h4>
+            <p>Fluid typography system supporting user font size preferences up to 200% without breaking layouts.</p>
+          </div>
+          <div class="cs-card">
+            <h4>Consistent Spacing</h4>
+            <p>8px grid system ensuring predictable spacing, touch targets, and visual rhythm across all components.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="cs-section" data-reveal>
+        <h2 class="cs-section-title">Outcomes</h2>
+        <div class="cs-metrics">
+          <div class="cs-metric">
+            <div class="value">35%</div>
+            <div class="label">Productivity Improvement</div>
+          </div>
+          <div class="cs-metric">
+            <div class="value">40%</div>
+            <div class="label">Fewer UI Inconsistencies</div>
+          </div>
+          <div class="cs-metric">
+            <div class="value">30%</div>
+            <div class="label">Reduction in Design Rework</div>
+          </div>
+          <div class="cs-metric">
+            <div class="value">25%</div>
+            <div class="label">Faster Design-to-Dev Turnaround</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cs-section" data-reveal>
+        <h2 class="cs-section-title">Key Learnings</h2>
+        <div class="cs-learnings">
+          <h4>What This Project Taught Me</h4>
+          <ul>
+            <li><strong>Governance is essential:</strong> A design system without clear ownership and contribution guidelines quickly becomes outdated or inconsistent.</li>
+            <li><strong>Scalable systems improve collaboration:</strong> When everyone works from the same components, cross-functional communication becomes clearer and faster.</li>
+            <li><strong>Design systems reduce long-term maintenance costs:</strong> The upfront investment pays dividends through reduced rework, faster onboarding, and consistent quality.</li>
+            <li><strong>Developer partnership is critical:</strong> Involving engineering early in token and component design ensures better adoption and fewer implementation issues.</li>
+          </ul>
+        </div>
+      </div>
+
+      <nav class="project-nav">
+        <a href="niharika-portfolio.html#work" class="project-nav-item">
+          <span class="label">Back to</span>
+          <span class="title">← All Projects</span>
+        </a>
+        <a href="project-revup.html" class="project-nav-item next">
+          <span class="label">Next Project</span>
+          <span class="title">Revup →</span>
+        </a>
+      </nav>
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap footer-inner">
+      <span>© 2026 Niharika Suru</span>
+      <span>Product Designer · UX Designer</span>
+    </div>
+  </footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 8);
+  }, { passive: true });
+
+  const revealEls = document.querySelectorAll('[data-reveal]');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('is-visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => io.observe(el));
+</script>
+</body>
+</html>
