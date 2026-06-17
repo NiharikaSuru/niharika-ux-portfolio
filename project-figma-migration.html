@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Adobe XD to Figma Migration — Niharika Suru</title>
+<title>Adobe XD to Figma Migration – Genesis Platform — Niharika Suru</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
@@ -214,10 +214,10 @@
   <header class="project-hero">
     <div class="wrap project-hero-inner">
       <div class="project-hero-text" data-reveal>
-        <span class="eyebrow">Design Systems · Enterprise</span>
-        <span class="role-tag">UI/UX Designer | Design Systems Contributor</span>
-        <h1>Adobe XD to Figma Migration</h1>
-        <p>A comprehensive design systems transformation that unified multiple product modules, eliminated collaboration friction, and established scalable component governance — improving team productivity by 35% and reducing UI inconsistencies by 40%.</p>
+        <span class="eyebrow">Design Systems · Enterprise Platform</span>
+        <span class="role-tag">UI/UX Designer | Migration Lead</span>
+        <h1>Adobe XD to Figma Migration — Genesis Platform</h1>
+        <p>Led the complete migration of the Genesis product ecosystem from Adobe XD to Figma, establishing a scalable design system with reusable components, improved collaboration workflows, and a stronger foundation for future product development.</p>
       </div>
       <div class="project-hero-image" data-reveal>
         <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&h=500&fit=crop" alt="Design System Overview">
@@ -229,44 +229,101 @@
     <div class="wrap">
 
       <div class="cs-section" data-reveal>
-        <h2 class="cs-section-title">Overview</h2>
-        <p>The organization had multiple product modules designed in Adobe XD across different teams, causing significant inconsistency in visual language, collaboration challenges due to tool limitations, and inefficient design-to-development workflows that slowed down product delivery.</p>
-        <p>This project documents the strategic migration from Adobe XD to Figma, establishing a unified design system with reusable components, design tokens, and governance rules that transformed how the design team collaborates and delivers.</p>
+        <h2 class="cs-section-title">Project Overview</h2>
+        <p>The Genesis platform was originally designed and maintained in Adobe XD. As Adobe announced the transition of Adobe XD into maintenance mode, the platform faced growing limitations in collaboration, scalability, design system management, and developer handoff.</p>
+        <p>To future-proof the design process and improve cross-functional collaboration, the organization initiated a complete migration of the Genesis product ecosystem from Adobe XD to Figma.</p>
+        <p>As a UI/UX Designer, I led the migration effort by auditing existing designs, rebuilding design assets, creating reusable components, and establishing a scalable design system within Figma.</p>
       </div>
 
       <div class="cs-section" data-reveal>
-        <h2 class="cs-section-title">Problem</h2>
-        <div class="cs-grid quad">
+        <h2 class="cs-section-title">The Challenge</h2>
+        <p>The Genesis platform consisted of multiple modules and complex user workflows that had evolved over time in Adobe XD. Several challenges emerged:</p>
+        <div class="cs-grid triple">
           <div class="cs-card">
             <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></div>
-            <h4>Disconnected Files</h4>
-            <p>Teams worked across disconnected design files with no single source of truth, causing version conflicts and duplicated effort.</p>
-          </div>
-          <div class="cs-card">
-            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg></div>
-            <h4>Design Inconsistencies</h4>
-            <p>Visual inconsistencies existed across modules — different button styles, spacing, and color applications created a fragmented user experience.</p>
+            <h4>Tool in Maintenance Mode</h4>
+            <p>Adobe XD was no longer receiving major feature enhancements and had entered maintenance mode, limiting future capabilities.</p>
           </div>
           <div class="cs-card">
             <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-            <h4>Inefficient Handoff</h4>
-            <p>Developer handoff was inefficient with manual spec documentation, leading to implementation errors and extended QA cycles.</p>
+            <h4>Limited Collaboration</h4>
+            <p>Real-time collaboration between designers, developers, and stakeholders was limited, slowing down review cycles.</p>
+          </div>
+          <div class="cs-card">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg></div>
+            <h4>Inconsistent UI Patterns</h4>
+            <p>Inconsistent UI patterns across different product modules created a fragmented user experience.</p>
           </div>
           <div class="cs-card">
             <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div>
-            <h4>Limited Reuse</h4>
-            <p>Component reuse was limited, with designers recreating similar elements repeatedly instead of leveraging a shared library.</p>
+            <h4>Scalability Issues</h4>
+            <p>Difficulties maintaining reusable components and design assets at scale as the product ecosystem grew.</p>
+          </div>
+          <div class="cs-card">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+            <h4>Time-Consuming Reviews</h4>
+            <p>Design reviews and developer handoffs were time-consuming, creating bottlenecks in the delivery process.</p>
+          </div>
+          <div class="cs-card">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg></div>
+            <h4>Lack of Governance</h4>
+            <p>No centralized design governance or component standardization across teams and projects.</p>
           </div>
         </div>
       </div>
 
       <div class="cs-section" data-reveal>
-        <h2 class="cs-section-title">Objectives</h2>
+        <h2 class="cs-section-title">Why Figma?</h2>
+        <p>Figma provided significant advantages over Adobe XD that directly addressed our challenges:</p>
+        <div class="cs-grid triple">
+          <div class="cs-card">
+            <h4>Real-time Collaboration</h4>
+            <p>Collaborative design and stakeholder reviews happening simultaneously, eliminating version conflicts.</p>
+          </div>
+          <div class="cs-card">
+            <h4>Powerful Component System</h4>
+            <p>Component variants and reusable libraries enabling consistent, scalable design patterns.</p>
+          </div>
+          <div class="cs-card">
+            <h4>Shared Design Systems</h4>
+            <p>Design systems shared across teams and projects, ensuring consistency at scale.</p>
+          </div>
+          <div class="cs-card">
+            <h4>Better Developer Handoff</h4>
+            <p>Inspect mode and design tokens streamlining the design-to-development workflow.</p>
+          </div>
+          <div class="cs-card">
+            <h4>Plugin Ecosystem</h4>
+            <p>Extensive plugins for productivity, automation, and integration with other tools.</p>
+          </div>
+          <div class="cs-card">
+            <h4>Version Control</h4>
+            <p>Improved version history and design governance capabilities for enterprise needs.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="cs-section" data-reveal>
+        <h2 class="cs-section-title">My Role</h2>
         <ul class="cs-list">
-          <li>Improve visual and interaction consistency across all product modules</li>
-          <li>Establish a scalable design system with reusable components and clear governance</li>
-          <li>Reduce design rework through better documentation and shared libraries</li>
+          <li>Audited and analyzed existing Adobe XD files across all Genesis modules</li>
+          <li>Planned the migration strategy and phased rollout for Genesis modules</li>
+          <li>Recreated screens and workflows in Figma with improved structure</li>
+          <li>Built reusable components and variants following best practices</li>
+          <li>Established typography, color, spacing, and icon standards</li>
+          <li>Created a scalable design system library for future growth</li>
+          <li>Collaborated with Product Managers, Developers, and QA teams throughout migration and validation</li>
+        </ul>
+      </div>
+
+      <div class="cs-section" data-reveal>
+        <h2 class="cs-section-title">Business Goals</h2>
+        <ul class="cs-list">
+          <li>Future-proof the design process by moving to an actively developed platform</li>
           <li>Improve cross-functional collaboration between design, development, and product teams</li>
+          <li>Establish a scalable design system with reusable components and clear governance</li>
+          <li>Reduce design rework and duplication through shared libraries</li>
+          <li>Streamline developer handoff and reduce implementation errors</li>
           <li>Create a foundation for rapid prototyping and design iteration</li>
         </ul>
       </div>
@@ -414,23 +471,32 @@
 
       <div class="cs-section" data-reveal>
         <h2 class="cs-section-title">Outcomes</h2>
-        <div class="cs-metrics">
-          <div class="cs-metric">
-            <div class="value">35%</div>
-            <div class="label">Productivity Improvement</div>
+        <p>The migration successfully transitioned the Genesis platform from Adobe XD to Figma, enabling faster collaboration, improved design consistency, and a stronger foundation for future product development.</p>
+        <div class="cs-grid">
+          <div class="cs-card">
+            <h4>Improved Collaboration</h4>
+            <p>Enhanced collaboration between design and engineering teams through real-time co-editing and commenting.</p>
           </div>
-          <div class="cs-metric">
-            <div class="value">40%</div>
-            <div class="label">Fewer UI Inconsistencies</div>
+          <div class="cs-card">
+            <h4>Reduced Duplication</h4>
+            <p>Eliminated design duplication through centralized reusable components and shared libraries.</p>
           </div>
-          <div class="cs-metric">
-            <div class="value">30%</div>
-            <div class="label">Reduction in Design Rework</div>
+          <div class="cs-card">
+            <h4>Faster Iterations</h4>
+            <p>Accelerated design iterations and stakeholder reviews with streamlined feedback workflows.</p>
           </div>
-          <div class="cs-metric">
-            <div class="value">25%</div>
-            <div class="label">Faster Design-to-Dev Turnaround</div>
+          <div class="cs-card">
+            <h4>Efficient Handoff</h4>
+            <p>More efficient developer handoff process with inspect mode and design token integration.</p>
           </div>
+        </div>
+        <div class="cs-learnings" style="margin-top:28px;">
+          <h4>Scalable Foundation</h4>
+          <ul>
+            <li>Design system ready for future product growth and new module additions</li>
+            <li>Standardized component governance ensuring long-term consistency</li>
+            <li>Clear documentation enabling faster onboarding for new team members</li>
+          </ul>
         </div>
       </div>
 
@@ -439,12 +505,24 @@
         <div class="cs-learnings">
           <h4>What This Project Taught Me</h4>
           <ul>
+            <li><strong>Migration is more than moving files:</strong> A successful migration requires strategic planning, stakeholder alignment, and a clear vision for the end state.</li>
             <li><strong>Governance is essential:</strong> A design system without clear ownership and contribution guidelines quickly becomes outdated or inconsistent.</li>
-            <li><strong>Scalable systems improve collaboration:</strong> When everyone works from the same components, cross-functional communication becomes clearer and faster.</li>
-            <li><strong>Design systems reduce long-term maintenance costs:</strong> The upfront investment pays dividends through reduced rework, faster onboarding, and consistent quality.</li>
             <li><strong>Developer partnership is critical:</strong> Involving engineering early in token and component design ensures better adoption and fewer implementation issues.</li>
+            <li><strong>Scalable systems improve collaboration:</strong> When everyone works from the same components, cross-functional communication becomes clearer and faster.</li>
+            <li><strong>Documentation enables adoption:</strong> Comprehensive usage guidelines and examples accelerate team adoption and reduce support burden.</li>
           </ul>
         </div>
+      </div>
+
+      <div class="cs-section" data-reveal>
+        <h2 class="cs-section-title">Next Steps</h2>
+        <ul class="cs-list">
+          <li>Continue expanding the component library to cover additional product modules</li>
+          <li>Implement design token integration with the development codebase</li>
+          <li>Establish regular design system reviews and governance meetings</li>
+          <li>Create onboarding materials for new designers joining the team</li>
+          <li>Explore Figma plugins to further automate repetitive design tasks</li>
+        </ul>
       </div>
 
       <nav class="project-nav">
